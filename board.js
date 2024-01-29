@@ -25,9 +25,12 @@ class Board {
         return res;
     }
 
-    checkWins() {
+    checkWins(lines) {
         let res = "";
         this.rows.forEach(row => res += row.checkWins());
+        for (let i = 0; i < lines; i++){
+            res += this.rows[i].checkWins();
+        }
         return res;
     }
 

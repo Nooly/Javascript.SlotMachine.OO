@@ -24,7 +24,7 @@ class AccountMgr {
     calcPnL() {
         let pnl = -1 * this.bet * this.numberOfLines;
 
-        const wins = this.board.checkWins();
+        const wins = this.board.checkWins(this.numberOfLines);
         for (const symbol of wins) {
             pnl += this.bet * (AccountMgr._SYMBOL_VALUE[symbol] + 1);
         };
