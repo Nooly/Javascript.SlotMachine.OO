@@ -16,10 +16,10 @@ class Board {
 
 
     spin() {
-        const spinNum = 10_000
+        const spinNum = 10_000 // spins this number of times, in the end, right now will only show the last spin on display
         for (let i = 0; i < spinNum; i++) {
             this._spin();
-            eventEmitter.emit('spin', i, spinNum, this.symbolPack); // send an event 'spin with information about the board
+            eventEmitter.emit('spin', i+1, spinNum+1, this.symbolPack); // send an event 'spin with information about the board
         }
     }
     _spin() {

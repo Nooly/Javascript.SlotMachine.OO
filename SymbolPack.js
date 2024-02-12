@@ -7,7 +7,7 @@ class SymbolPack {
         return SymbolPack.instance;
     }
 
-    static _SYMBOL_OBJECTS = {
+    static _SYMBOL_OBJECTS = { // idea to send a simple parameter to let the factory itself decide how to display
         // A: SymbolFactory.createSymbol("Smile"),
         A: SymbolFactory.createSymbol("banana"),
         B: SymbolFactory.createSymbol("strawberry"),

@@ -16,7 +16,7 @@ class SlotMachine {
         this.accountMgr = new AccountMgr(this.board,
             this.ioMgr.getDeposit());
 
-        eventEmitter.on('spin', (index, total, symbolPack) => {
+        eventEmitter.on('spin', (index, total, symbolPack) => { // recieves the event 'spin'
             this.displayProgressBar(index, total);
         });
     }
