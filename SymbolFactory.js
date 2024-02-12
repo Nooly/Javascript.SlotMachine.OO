@@ -41,9 +41,9 @@ class RegularSymbol {
     }
 }
 
-function canDisplayEmojis() {
+function canDisplayEmojis() { // node app.js --no-emojis (use this command line for terminals that dont support emojis)
     const args = process.argv.slice(2);
-    process.env.EMOJIS = 'true';
+    process.env.EMOJIS = 'true'; // every process has its own .env 
     for (let i = 0; i < args.length; i++) {
         if (args[i] === '--no-emojis') {
             process.env.EMOJIS = 'false';
