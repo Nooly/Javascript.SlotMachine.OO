@@ -13,6 +13,11 @@ class Board{
     };
 
     spin(){
+        for(let i = 0; i < 100; i++){
+            this._spin();
+        }
+    }
+    _spin(){
         for(let i = 0; i < this.rowsNum; i++){
             this.rows[i] = this.symbolPack.getXRandomSymbols(this.columnsNum);
         }

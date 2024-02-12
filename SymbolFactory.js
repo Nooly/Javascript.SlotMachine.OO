@@ -43,13 +43,17 @@ class RegularSymbol {
 
 function canDisplayEmojis() {
     const args = process.argv.slice(2);
+    process.env.EMOJIS = 'true';
     for (let i = 0; i < args.length; i++) {
-        process.env.NO_EMOJIS = 'false';
         if (args[i] === '--no-emojis') {
-            process.env.NO_EMOJIS = 'true';
+            process.env.EMOJIS = 'false';
         }
     }
-    return process.env.NO_EMOJIS === 'true';
+    console.log("process")
+    console.log(process.env.EMOJIS);
+    console.log("returns");
+    console.log(process.env.EMOJIS === 'true');
+    return process.env.EMOJIS === 'true';
 }
 
 
