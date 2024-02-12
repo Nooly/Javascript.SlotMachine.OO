@@ -1,12 +1,12 @@
 import PromptSync from "prompt-sync";
 
+
 class IOMgr {
     static getInstance() {
         if (!IOMgr.instance) {
             IOMgr.instance = new IOMgr();
-            return IOMgr.instance;
         }
-        else return IOMgr.instance;
+        return IOMgr.instance;
     }
 
     constructor() {
@@ -24,66 +24,59 @@ class IOMgr {
 
     getDeposit() {
         while (true) {
-            let depositeAmount = this._prompt("Enter a deposit amount [100]: ");
-            if (depositeAmount.length === 0)
-                depositeAmount = 100;
+            let depositAmount = this._prompt("Enter a deposit amount[100]: ");
+            if (depositAmount.length === 0)
+                depositAmount = 100;
 
-            const numberDepositAMount = parseFloat(depositeAmount);
-
-            if (!isNaN(numberDepositAMount) && numberDepositAMount > 0) {
-                this.printMsg(`Your initial balance is ${numberDepositAMount}`);
-                return numberDepositAMount;
+            const numberDepositAmount = parseFloat(depositAmount);
+            if(!isNaN(numberDepositAmount) && numberDepositAmount > 0){
+                this.printMsg("Your initial balance is $" + numberDepositAmount)
+                return numberDepositAmount;
             }
 
-            this.printMsg("Invalid deposit amount, try again.");
-
-
+            this.printMsg("Invalid deposit amount, try again");
         }
     }
 
     getNumberOfLines() {
         while (true) {
-            let lines = this._prompt("Enter the number of lines to bet on (1-3) [3]: ");
+            let lines = this._prompt("Enter number of lines (1-3) [3]: ");
             if (lines.length === 0)
                 lines = 3;
 
             const numberOfLines = parseFloat(lines);
-
-            if (!isNaN(numberOfLines) && numberOfLines > 0 && numberOfLines <= 3) {
-                this.printMsg(`You're betting on ${numberOfLines} number of lines.`);
+            if(!isNaN(numberOfLines) && numberOfLines > 0 && numberOfLines <= 3){
+                this.printMsg("You are betting on " + numberOfLines + " lines")
                 return numberOfLines;
             }
 
-            this.printMsg("Invalid number of lines to bet on, try again.");
+            this.printMsg("Invalid number of lines, try again");
         }
     }
 
     getBet(validationFunc) {
         while (true) {
-            let bet = this._prompt("Enter the bet pet line [$5]: ");
+            let bet = this._prompt("Enter the bet per line [$5]: ");
             if (bet.length === 0)
                 bet = 5;
 
             const numberBet = parseFloat(bet);
-
-            if (validationFunc(numberBet)) {
-                this.printMsg(`You're betting on ${numberBet}$ per line.`);
+            if(validationFunc(numberBet)){
+                this.printMsg("Your bet is $" + numberBet + " per line")
                 return numberBet;
             }
 
-            this.printMsg("Invalid bet, try again.");
+            this.printMsg("Invalid bet amount");
         }
-    }
-
-
+     }
 
     getPlayAgain() {
-        let playAgain = this._prompt("Do you want to play again (y/n) [y]? ");
+        let playAgain = this._prompt("Do you want to play again (y/n) [y]? ")
         if (playAgain.length === 0)
-            playAgain = "y";
-        return playAgain == "y";
-    }
+            playAgain = 'y';
 
-};
+        return playAgain == 'y';
+     }
+}
 
-export default IOMgr;
+export default IOMgr
