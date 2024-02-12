@@ -1,37 +1,42 @@
+import eventEmitter from './eventEmitter.js';
 import SymbolPack from "./SymbolPack.js";
 import WinCheckerFactory from "./IWinChecker.js";
+
 // import Symbol from "./Symbol.js";
 
-class Board{
+class Board {
     constructor(rowsNum, columnsNum) {
         this.rowsNum = rowsNum;
         this.columnsNum = columnsNum;
         this.symbolPack = SymbolPack.getInstance();
 
-        this.rows = Array.from({length: this.rowsNum}, () => Array.from({length: this.columnsNum}, () => ""));
+        this.rows = Array.from({ length: this.rowsNum }, () => Array.from({ length: this.columnsNum }, () => ""));
         // Initialized this.rows as a two-dimensional array
     };
 
-    spin(){
-        for(let i = 0; i < 100; i++){
+
+    spin() {
+        const spinNum = 10_000
+        for (let i = 0; i < spinNum; i++) {
             this._spin();
+            eventEmitter.emit('spin', i, spinNum, this.symbolPack); // send an event 'spin with information about the board
         }
     }
-    _spin(){
-        for(let i = 0; i < this.rowsNum; i++){
+    _spin() {
+        for (let i = 0; i < this.rowsNum; i++) {
             this.rows[i] = this.symbolPack.getXRandomSymbols(this.columnsNum);
         }
     }
     // Updated spin method to fill the two-dimensional array with random symbols
 
-    getFormattedString(){ // change this so that it checks the local runtime to see if it supports emojis and returns emojis if yes and logical values if not, use factory
+    getFormattedString() { // change this so that it checks the local runtime to see if it supports emojis and returns emojis if yes and logical values if not, use factory
         let res = "";
         this.rows.forEach(row => res += row.map((symbol) => symbol.displayValue).join(" | ") + "\n");
         return res;
     }
     // Updated getFormattedString method to return a string representation of the two-dimensional array
 
-    checkWins(numberOfLines) { 
+    checkWins(numberOfLines) {
         let res = "";
         let winCheckers = WinCheckerFactory.CreateWinChecker();
         winCheckers.forEach((winChecker, index) => {

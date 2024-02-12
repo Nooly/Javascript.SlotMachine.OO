@@ -49,10 +49,10 @@ function canDisplayEmojis() {
             process.env.EMOJIS = 'false';
         }
     }
-    console.log("process")
-    console.log(process.env.EMOJIS);
-    console.log("returns");
-    console.log(process.env.EMOJIS === 'true');
+    // console.log("process")
+    // console.log(process.env.EMOJIS);
+    // console.log("returns");
+    // console.log(process.env.EMOJIS === 'true');
     return process.env.EMOJIS === 'true';
 }
 
