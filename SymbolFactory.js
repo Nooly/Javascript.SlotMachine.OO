@@ -2,7 +2,7 @@ class SymbolFactory {
     static createSymbol(logicalValue, displayValue, description) {
         if (displayValue.length === 2 && displayValue !== "�")
             return new EmojiSymbol(logicalValue, displayValue, description)
-        
+
         else return new RegularSymbol(logicalValue, description);
     }
 
@@ -17,7 +17,7 @@ class EmojiSymbol {
 class RegularSymbol {
     constructor(logicalValue, description) {
         this.logicalValue = logicalValue;
-        this.displayValue = logicalValue;
+        this.displayValue = " " + logicalValue;
         this.description = description || `This is a symbol with display value ${logicalValue} and logical value ${logicalValue}`;
     }
 }
