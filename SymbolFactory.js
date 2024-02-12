@@ -1,6 +1,6 @@
 
 const Emojis = {
-    banana : "🍌",
+    banana: "🍌",
     strawberry: "🍓",
     grape: "🍇",
     apple: "🍏",
@@ -8,7 +8,7 @@ const Emojis = {
 }
 
 const Displays = {
-    banana : "A",
+    banana: "A",
     strawberry: "B",
     grape: "C",
     apple: "D",
@@ -42,45 +42,14 @@ class RegularSymbol {
 }
 
 function canDisplayEmojis() {
-    let terminalType = process.env.TERM;
-    if (terminalType == undefined)
-        terminalType = getTerminalType();
-    // Check if the terminal type is known to support emojis
-    const supportedTerminalTypes = [
-        'xterm',
-        'xterm-256color',
-        'iterm',
-        'Windows Terminal',
-        'gnome-terminal', // GNOME Terminal (Linux)
-        'konsole', // Konsole (KDE Plasma)
-        'alacritty', // Alacritty (GPU-accelerated terminal)
-        'kitty', // Kitty (cross-platform GPU-based terminal)
-        'hyper', // Hyper (Electron-based terminal)
-        'terminator', // Terminator (Linux terminal emulator)
-        'tilix', // Tilix (GTK3 tiling terminal emulator)
-        'st', // Simple Terminal (suckless terminal)
-        'termite', // Termite (keyboard-centric terminal)
-        'urxvt', // rxvt-unicode (terminal emulator for X)
-        'stterm', // Another variant of Simple Terminal
-        'kterm', // KTerm (KDE terminal emulator)
-        'xfce4-terminal', // XFCE4 Terminal (Xfce desktop environment)
-        'terminology', // Enlightenment Terminal (Terminology)
-        'lilyterm', // LilyTerm (Lightweight and efficient terminal emulator)
-        'cool-retro-term', // Cool Retro Term (Vintage terminal emulator)
-        'pantheon-terminal', // Pantheon Terminal (elementary OS)
-        'powershell', // PowerShell (Windows)
-        // Add more terminal types as needed
-    ];
-    return supportedTerminalTypes.includes(terminalType);
-}
-
-
-function getTerminalType() {
-    try {
-        return execSync('tty -s && echo "$TERM" || echo "unknown"').toString().trim();
-    } catch (error) {
-        return 'unknown';
+    const args = process.argv.slice(2);
+    for (let i = 0; i < args.length; i++) {
+        process.env.NO_EMOJIS = 'false';
+        if (args[i] === '--no-emojis') {
+            process.env.NO_EMOJIS = 'true';
+        }
     }
+    return process.env.NO_EMOJIS === 'true';
 }
 
 
