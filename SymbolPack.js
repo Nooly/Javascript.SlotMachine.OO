@@ -8,12 +8,11 @@ class SymbolPack {
     }
 
     static _SYMBOL_OBJECTS = {
-        A: SymbolFactory.createSymbol("A", "🍌", "Banana"),
-        // A: SymbolFactory.createSymbol("A", "�", "Banana"),
-        B: SymbolFactory.createSymbol("B", "🍓", "Strawberry"),
-        C: SymbolFactory.createSymbol("C", "🍇", "Grapes"),
-        D: SymbolFactory.createSymbol("D", "🍏", "Apple"),
-        // D: SymbolFactory.createSymbol("D", "🧑🏻", "Apple"),
+        // A: SymbolFactory.createSymbol("Smile"),
+        A: SymbolFactory.createSymbol("banana"),
+        B: SymbolFactory.createSymbol("strawberry"),
+        C: SymbolFactory.createSymbol("grape"),
+        D: SymbolFactory.createSymbol("apple"),
     }
 
     static _SYMBOLS_COUNT = {
