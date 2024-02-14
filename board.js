@@ -19,7 +19,7 @@ class Board {
         const spinNum = 10_000 // spins this number of times, in the end, right now will only show the last spin on display
         for (let i = 0; i < spinNum; i++) {
             this._spin();
-            eventEmitter.emit('spin', i+1, spinNum+1, this.symbolPack); // send an event 'spin with information about the board
+            eventEmitter.emit('spin', i + 1, spinNum + 1, this.symbolPack); // send an event 'spin with information about the board
         }
     }
     _spin() {
@@ -37,18 +37,49 @@ class Board {
     // Updated getFormattedString method to return a string representation of the two-dimensional array
 
     checkWins(numberOfLines) {
-        let res = "";
+        // let res = "";
+        let res = [];
         let winCheckers = WinCheckerFactory.CreateWinChecker();
         winCheckers.forEach((winChecker, index) => {
             if (index < numberOfLines) {
-                res += winChecker.CheckWins(this);
+                // res += winChecker.CheckWins(this); // we get here the new objects with the information
+                res.push(winChecker.CheckWins(this));
+
+
+
+
+               
             }
         });
+        const flatRes = res.flatMap(innerArray => innerArray);
+        return flatRes;
+
         // if (res.length !== 0)  bug?
-        return res;
+        // return res;
     }
     // Updated checkWins method to check for wins in the two-dimensional array
 
 }
 
 export default Board;
+
+
+ // look like this 
+                // [
+                //     [{1,A,row},{2,B,row}],
+                //     [{1,A,col},{2,B,col}],
+                // ]
+
+                // After .map() //returns a new array with the same data structure and does something on it
+                // [
+                //     [{1,A,ROW},{2,B,ROW}],
+                //     [{1,A,COL},{2,B,COL}],
+                // ]
+
+                // After .flatMap() // deconstructs inner arrays
+                // [
+                //      {1,A,row},
+                //      {2,B,row},
+                //      {1,A,col},
+                //      {2,B,col},
+                // ]
