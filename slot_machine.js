@@ -4,7 +4,6 @@ import AccountMgr from "./account_mgr.js";
 import Board from "./board.js";
 import IOMgr from "./iomgr.js";
 
-
 class SlotMachine {
     static _ROWS = 3;
     static _COLUMNS = 3;
@@ -48,14 +47,14 @@ class SlotMachine {
         //      {line: 1, symbol: A, type: row, hasWin: 1, pnl: pnl},
         // ]
         calcSortedWinsPnlDec.forEach(o => {
-            this.ioMgr.printMsg(`in ${o.type} ${o.line} you won ${o.pnl}$ on the symbol ${o.symbol.displayValue} }`);
+            this.ioMgr.printMsg(`in ${o.type} ${o.line} ${this.ioMgr.formatText(`you won ${o.pnl}$`, "green")} on the symbol ${o.symbol.displayValue}`);
         });
 
         roundPnl.lossesWithPnl.forEach(o => {
-            this.ioMgr.printMsg(`in ${o.type} ${o.line} you lost ${o.pnl}$}`);
+            this.ioMgr.printMsg(`in ${o.type} ${o.line} ${this.ioMgr.formatText(`you lost ${o.pnl}$`, "red")}`);
         });
 
-        this.ioMgr.printMsg("your profit/loss in this round is $" + roundPnl.roundPnl)
+        this.ioMgr.printMsg(`${this.ioMgr.formatText(`your profit/loss in this round is $ + ${roundPnl.roundPnl}`, "yellow", true)}`);
         this.ioMgr.printMsg("your balance is $" + roundPnl.updatedBalance)
     }
 
@@ -80,5 +79,17 @@ class SlotMachine {
         process.stdout.write(`[${progress}${empty}] ${percentage}%`);
     }
 }
+
+// Function to format text with colors and styles
+
+
+// // Example usage
+// if (supportsColor.stdout) {
+//     console.log(formatText('This is a green line', 'green', true));
+//     console.log(formatText('This is a red line', 'red', false));
+//     console.log(formatText('This is a yellow line', 'yellow', true));
+// } else {
+//     console.log('Terminal does not support colors.');
+// }
 
 export default SlotMachine

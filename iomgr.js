@@ -1,4 +1,5 @@
 import PromptSync from "prompt-sync";
+import supportsColor from 'supports-color';
 
 
 class IOMgr {
@@ -22,6 +23,22 @@ class IOMgr {
         console.log(msg);
     }
 
+    formatText(text, color, isBold = false) {
+        if (!supportsColor.stdout) return text;
+
+        const styles = [];
+
+        if (color === 'green') styles.push('\x1b[32m');
+        else if (color === 'red') styles.push('\x1b[31m');
+        else if (color === 'yellow') styles.push('\x1b[33m');
+
+        if (isBold) styles.push('\x1b[1m');
+
+        const resetStyle = '\x1b[0m';
+
+        return styles.join('') + text + resetStyle;
+    }
+
     getDeposit() {
         while (true) {
             let depositAmount = this._prompt("Enter a deposit amount[100]: ");
@@ -29,7 +46,7 @@ class IOMgr {
                 depositAmount = 100;
 
             const numberDepositAmount = parseFloat(depositAmount);
-            if(!isNaN(numberDepositAmount) && numberDepositAmount > 0){
+            if (!isNaN(numberDepositAmount) && numberDepositAmount > 0) {
                 this.printMsg("Your initial balance is $" + numberDepositAmount)
                 return numberDepositAmount;
             }
@@ -45,7 +62,7 @@ class IOMgr {
                 lines = 3;
 
             const numberOfLines = parseFloat(lines);
-            if(!isNaN(numberOfLines) && numberOfLines > 0 && numberOfLines <= 3){
+            if (!isNaN(numberOfLines) && numberOfLines > 0 && numberOfLines <= 3) {
                 this.printMsg("You are betting on " + numberOfLines + " lines")
                 return numberOfLines;
             }
@@ -61,14 +78,14 @@ class IOMgr {
                 bet = 5;
 
             const numberBet = parseFloat(bet);
-            if(validationFunc(numberBet)){
+            if (validationFunc(numberBet)) {
                 this.printMsg("Your bet is $" + numberBet + " per line")
                 return numberBet;
             }
 
             this.printMsg("Invalid bet amount");
         }
-     }
+    }
 
     getPlayAgain() {
         let playAgain = this._prompt("Do you want to play again (y/n) [y]? ")
@@ -76,7 +93,7 @@ class IOMgr {
             playAgain = 'y';
 
         return playAgain == 'y';
-     }
+    }
 }
 
 export default IOMgr
