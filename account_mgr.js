@@ -16,45 +16,34 @@ class AccountMgr {
     }
 
     calcPnL() {
-        let pnl = -1 * this.bet * this.numberOfLines;
 
-        const wins = this.board.checkWins(this.numberOfLines);
-        // wins looks like this now
-        // [
-        //      {line: 1, symbol: A, checker: row, pnl: pnl},
-        //      {line: 2, symbol: B, checker: row, pnl: pnl},
-        //      {line: 1, symbol: A, checker: col, pnl: pnl},
-        //      {line: 2, symbol: B, checker: col, pnl: pnl},
-        // ]
-        // const newWins = wins.map()
+        const winsAndLosses = this.board.checkWins(this.numberOfLines);
 
-        let pnlObject = {
-            wins:
-                [
-                    { line: 1, symbol: A, checker: row, pnl: pnl },
-                    { line: 2, symbol: B, checker: row, pnl: pnl },
-                    { line: 1, symbol: A, checker: col, pnl: pnl },
-                    { line: 2, symbol: B, checker: col, pnl: pnl },
-                ],
-            losses: [
-                [
-                    { line: 1, checker: row, pnl: pnl },
-                    { line: 2, checker: row, pnl: pnl },
-                    { line: 1, checker: col, pnl: pnl },
-                    { line: 2, checker: col, pnl: pnl },
-                ],
-            ],
-            roundPnl: 1,
-            updatedBalance: 1,
+        //      {line: 1, symbol: A, type: row, hasWin: 1},
+        // console.log(winsAndLosses)
+        const winsWithPnl = winsAndLosses
+            .filter(o => o.hasWin === 1)
+            .map(o => ({ ...o, pnl: this.bet * (SymbolPack.getSymbolDollarValue(o.symbol.logicalValue) + 1) })); // adds pnl
+        const lossWithPnl = winsAndLosses
+            .filter(o => o.hasWin === 0)
+            .map(o => ({ ...o, pnl: -this.bet }));
+
+        //      {line: 1, symbol: A, type: row, hasWin: 1, pnl: pnl},
+
+        const roundWinsPnl = winsWithPnl.reduce((acc, o) => acc + o.pnl, 0); // calculates total pnl on this collection
+        const roundLosssPnl = lossWithPnl.reduce((acc, o) => acc + o.pnl, 0);
+
+        const totalPnl = roundLosssPnl + roundWinsPnl;
+
+        this.balance += totalPnl; // updates balance
+
+        return {
+            winsWithPnl: winsWithPnl,
+            lossesWithPnl: lossWithPnl,
+            roundPnl: totalPnl,
+            updatedBalance: this.balance,
         }
 
-
-        for (const symbol of wins) {
-            pnl += this.bet * (SymbolPack.getSymbolDollarValue(symbol) + 1);
-        }
-
-        this.balance += pnl;
-        return pnl;
     }
 
 }
